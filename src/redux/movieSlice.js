@@ -11,7 +11,7 @@ export const fetchMovies = createAsyncThunk(
       `https://api.themoviedb.org/3/search/movie`,
       {
         params: {
-          api_key: "86f8955cac43b6e93132664afbcb0af0",
+        //   api_key: "86f8955cac43b6e93132664afbcb0af0",
           query: query,
         },
       }
