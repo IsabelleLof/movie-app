@@ -36,8 +36,8 @@ A React-based web application where users can search for movies, view movie deta
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-repository/hemmakvalls-movie-library.git
-   cd hemmakvalls-movie-library
+   git clone https://github.com/your-repository/movie-app.git
+   cd movie-app
 
 
 
