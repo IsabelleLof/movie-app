@@ -1,30 +1,22 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import SearchBar from "./components/SearchBar";
-import MovieList from "./components/MovieList";
-import FavoritesList from "./components/FavoritesList";
-import NavigationMenu from "./components/NavigationMenu";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import FavoritesPage from './pages/FavoritesPage';
+import MovieDetailsPage from './pages/MovieDetailsPage';
+import NavigationMenu from './components/NavigationMenu';
 
 const App = () => {
   return (
     <Router>
-      <div className="min-h-screen bg-red-100">
-        <NavigationMenu />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <SearchBar />
-                <MovieList />
-              </>
-            }
-          />
-          <Route path="/favorites" element={<FavoritesList />} />
-        </Routes>
-      </div>
+      <NavigationMenu />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/favorites" element={<FavoritesPage />} />
+        <Route path="/movie/:id" element={<MovieDetailsPage />} />
+      </Routes>
     </Router>
   );
 };
 
 export default App;
+
