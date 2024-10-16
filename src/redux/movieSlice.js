@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const apiKey = import.meta.env.VITE_TMDB_API_KEY;
+
 // Thunk to fetch popular movies from TMDB API
 export const fetchPopularMovies = createAsyncThunk(
   "movies/fetchPopularMovies",
@@ -9,7 +11,7 @@ export const fetchPopularMovies = createAsyncThunk(
       `https://api.themoviedb.org/3/movie/popular`,
       {
         params: {
-          // api_key: "86f8955cac43b6e93132664afbcb0af0",
+          api_key: apiKey,
         },
       }
     );
@@ -25,7 +27,7 @@ export const fetchMovies = createAsyncThunk(
       `https://api.themoviedb.org/3/search/movie`,
       {
         params: {
-          // api_key: "86f8955cac43b6e93132664afbcb0af0",
+          api_key: apiKey,
           query: query,
         },
       }

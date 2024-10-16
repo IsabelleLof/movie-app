@@ -9,6 +9,10 @@ import {
   selectFavorites,
 } from "../redux/movieSlice"; // Import actions and selector
 
+// get the api key from .env
+
+const apiKey = import.meta.env.VITE_TMDB_API_KEY;
+
 const MovieDetailsPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -18,13 +22,15 @@ const MovieDetailsPage = () => {
   const favorites = useSelector(selectFavorites); // Get the list of favorites
 
   // Check if the movie is already in favorites
+
   const isFavorite = favorites.some((favMovie) => favMovie.id === parseInt(id));
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
         const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${id}?api_key=`
+          // using the secret apiKey from .env
+          `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`
         );
         setMovie(response.data);
         setLoading(false);
