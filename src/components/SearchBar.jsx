@@ -2,13 +2,39 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchMovies } from '../redux/movieSlice';
 
-const SearchBar = () => {
+// Debounce function to delay the search input handling
+const debounce = (func, delay) => {
+  let timeoutId;
+  return function (...args) {
+    if (timeoutId) clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func.apply(null, args);
+    }, delay);
+  };
+};
+
+const SearchBar = ({ onSearch }) => {
   const [query, setQuery] = useState('');
   const dispatch = useDispatch();
 
+  // Debounced search handler
+  const debouncedSearch = debounce((query) => {
+    if (query.trim() !== '') {
+      dispatch(fetchMovies(query)); // Fetch movies if query is not empty
+    }
+  }, 500); // 500ms delay for debouncing
+
+  const handleInputChange = (e) => {
+    const searchQuery = e.target.value;
+    setQuery(searchQuery);
+    debouncedSearch(searchQuery); // Trigger the debounced search
+  };
+
   const handleSearch = (e) => {
     e.preventDefault();
-    dispatch(fetchMovies(query)); // Fetch movies based on the search query
+    if (query.trim() !== '') {
+      dispatch(fetchMovies(query)); // Fetch movies on form submission
+    }
   };
 
   return (
@@ -16,7 +42,7 @@ const SearchBar = () => {
       <input
         type="text"
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        onChange={handleInputChange}
         placeholder="Search for movies..."
         className="border rounded p-2 w-1/2"
       />
@@ -28,3 +54,4 @@ const SearchBar = () => {
 };
 
 export default SearchBar;
+
