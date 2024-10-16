@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import Rating from '../components/Rating'; // Import the Rating component
-import { addFavorite, removeFavorite, selectFavorites } from '../redux/movieSlice'; // Import actions and selector
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import Rating from "../components/Rating"; // Import the Rating component
+import {
+  addFavorite,
+  removeFavorite,
+  selectFavorites,
+} from "../redux/movieSlice"; // Import actions and selector
 
 const MovieDetailsPage = () => {
   const { id } = useParams();
@@ -20,12 +24,12 @@ const MovieDetailsPage = () => {
     const fetchMovieDetails = async () => {
       try {
         const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${id}?api_key=86f8955cac43b6e93132664afbcb0af0`
+          `https://api.themoviedb.org/3/movie/${id}?api_key=`
         );
         setMovie(response.data);
         setLoading(false);
       } catch (error) {
-        setError('Failed to load movie details.');
+        setError("Failed to load movie details.");
         setLoading(false);
       }
     };
@@ -55,24 +59,19 @@ const MovieDetailsPage = () => {
         alt={movie.title}
         className="my-4"
       />
-
       {/* Rating component */}
       <Rating movieId={id} /> {/* Pass movieId to Rating component */}
-
       {/* Button to add/remove from favorites */}
       <button
         onClick={handleFavoriteClick}
         className={`mt-4 p-2 rounded ${
-          isFavorite ? 'bg-red-600 text-white' : 'bg-green-600 text-white'
+          isFavorite ? "bg-red-600 text-white" : "bg-green-600 text-white"
         }`}
       >
-        {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+        {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
       </button>
     </div>
   );
 };
 
 export default MovieDetailsPage;
-
-
-
