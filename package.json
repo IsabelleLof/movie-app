@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "postbuild": "node scripts/generateRobotsTxt.js && node scripts/generateSitemap.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
