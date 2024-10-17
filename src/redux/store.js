@@ -21,3 +21,4 @@ store.subscribe(() => {
     ratings: store.getState().ratings, // Spara ratings-tillstånd
   });
 });
+
