@@ -1,7 +1,12 @@
+// Use fetch() instead
+
+// Replaced axios with fetch: Used fetch to call the API and parse the response as JSON.
+// Error Handling: Checked response.ok to handle errors if the fetch call fails.
+// Cleaned up Code: Used try...catch with finally to set the loading state after the fetch call completes.
+
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import Rating from "../components/Rating"; // Import the Rating component
 import {
   addFavorite,
@@ -9,7 +14,7 @@ import {
   selectFavorites,
 } from "../redux/movieSlice"; // Import actions and selector
 
-// get the api key from .env
+// Get the API key from .env
 const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 
 const MovieDetailsPage = () => {
@@ -26,13 +31,17 @@ const MovieDetailsPage = () => {
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
-        const response = await axios.get(
+        const response = await fetch(
           `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`
         );
-        setMovie(response.data);
-        setLoading(false);
+        if (!response.ok) {
+          throw new Error("Failed to load movie details.");
+        }
+        const data = await response.json();
+        setMovie(data);
       } catch (error) {
-        setError("Failed to load movie details.");
+        setError(error.message);
+      } finally {
         setLoading(false);
       }
     };
@@ -99,7 +108,7 @@ const MovieDetailsPage = () => {
 
             <div className="flex items-center mt-8 gap-2">
               <button className="bg-blue-600 text-white p-2 rounded">
-              Watch the movie
+                Watch the movie
               </button>
 
               <button
@@ -119,6 +128,7 @@ const MovieDetailsPage = () => {
 };
 
 export default MovieDetailsPage;
+
 
 
 

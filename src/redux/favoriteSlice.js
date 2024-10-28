@@ -1,5 +1,6 @@
+// Use fetch instead and implemneting better error handling if response is not okay - throw error
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 
 const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 
@@ -7,9 +8,19 @@ const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 export const fetchFavorites = createAsyncThunk(
   "favorites/fetchFavorites",
   async () => {
-    // If you had a backend API to fetch saved favorites, you could use it here.
-    // For this example, we return an empty list as we assume the favorites are stored locally.
-    return [];
+    try {
+      const response = await fetch(
+        `https://api.example.com/favorites?api_key=${apiKey}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch favorites.");
+      }
+      const data = await response.json();
+      return data; // Return fetched data
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 );
 
@@ -26,12 +37,12 @@ const favoriteSlice = createSlice({
   initialState,
   reducers: {
     addFavorite: (state, action) => {
-      // Kontrollera om filmen redan finns i favoriter
+      // Check if the movie already exists in favorites
       const movieExists = state.items.some(item => item.id === action.payload.id);
       if (!movieExists) {
-        state.items.push(action.payload); // Lägg till filmen om den inte redan finns
+        state.items.push(action.payload); // Add movie if it doesn't already exist
 
-        // Skicka händelsen till Google Tag Manager (GTM)
+        // Send event to Google Tag Manager (GTM)
         if (window && window.dataLayer) {
           window.dataLayer.push({
             event: "add_to_favorite",
@@ -46,7 +57,7 @@ const favoriteSlice = createSlice({
     removeFavorite: (state, action) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
 
-      // Skicka händelsen till Google Tag Manager (GTM)
+      // Send event to Google Tag Manager (GTM)
       if (window && window.dataLayer) {
         window.dataLayer.push({
           event: "remove_from_favorite",
@@ -84,6 +95,3 @@ export const selectFavoritesError = (state) => state.favorites.error;
 
 // Export the reducer to be used in the store
 export default favoriteSlice.reducer;
-
-
-

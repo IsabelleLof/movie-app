@@ -1,5 +1,7 @@
+// Use fetch instead, fetch returns a Response object, 
+// so we call .json() to parse the JSON body.
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 
 const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 
@@ -7,15 +9,11 @@ const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 export const fetchPopularMovies = createAsyncThunk(
   "movies/fetchPopularMovies",
   async () => {
-    const response = await axios.get(
-      `https://api.themoviedb.org/3/movie/popular`,
-      {
-        params: {
-          api_key: apiKey,
-        },
-      }
+    const response = await fetch(
+      `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`
     );
-    return response.data.results; // Return the list of popular movies
+    const data = await response.json();
+    return data.results; // Return the list of popular movies
   }
 );
 
@@ -23,16 +21,11 @@ export const fetchPopularMovies = createAsyncThunk(
 export const fetchMovies = createAsyncThunk(
   "movies/fetchMovies",
   async (query) => {
-    const response = await axios.get(
-      `https://api.themoviedb.org/3/search/movie`,
-      {
-        params: {
-          api_key: apiKey,
-          query: query,
-        },
-      }
+    const response = await fetch(
+      `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}`
     );
-    return response.data.results; // Return the search results
+    const data = await response.json();
+    return data.results; // Return the search results
   }
 );
 
@@ -99,4 +92,5 @@ export const selectError = (state) => state.movies.error;
 
 // Export the reducer to be used in the store
 export default movieSlice.reducer;
+
 
