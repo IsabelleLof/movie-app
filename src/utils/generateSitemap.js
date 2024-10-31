@@ -1,49 +1,46 @@
-import { writeFileSync } from 'fs';
-import path from 'path';
+import fs from "fs";
+import fetch from "node-fetch";
+import path from "path";
+import "dotenv/config"; // Loads environment variables
 
-// Hårdkodade rutter för statiska sidor i din Movie App
-const staticPages = [
-  { url: '/', changefreq: 'daily', priority: 1.0 },
-  { url: '/favorites', changefreq: 'weekly', priority: 0.8 },
-  { url: '/about', changefreq: 'monthly', priority: 0.5 },
-];
-
-// Om du har dynamiskt genererade sidor som t.ex. filmer:
-const dynamicPages = [
-  { url: '/movie/123', changefreq: 'weekly', priority: 0.7 },
-  { url: '/movie/456', changefreq: 'weekly', priority: 0.7 },
-];
-
-// Funktion för att generera sitemap.xml
-const generateSitemap = () => {
-  const baseUrl = 'https://movie-app-ruby-rho.vercel.app'; // Din bas-URL
-
-  // Kombinera statiska och dynamiska sidor
-  const pages = [...staticPages, ...dynamicPages];
-
-  // Generera sitemap-innehållet
-  let sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
-
-  pages.forEach((page) => {
-    sitemapContent += `
-    <url>
-      <loc>${baseUrl}${page.url}</loc>
-      <changefreq>${page.changefreq}</changefreq>
-      <priority>${page.priority}</priority>
-    </url>`;
-  });
-
-  sitemapContent += `\n</urlset>`;
-
-  // Skriv sitemap.xml till public-mappen
-  const sitemapPath = path.join(__dirname, '..', 'public', 'sitemap.xml');
+// Function to generate sitemap
+const generateSitemap = async () => {
   try {
-    writeFileSync(sitemapPath, sitemapContent);
-    console.log('sitemap.xml generated successfully!');
+    const response = await fetch(
+      `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.VITE_TMDB_API_KEY}`
+    );
+    const data = await response.json();
+
+    // Check if results exist in the API response
+    if (!data.results || data.results.length === 0) {
+      throw new Error("No results found in the API response");
+    }
+
+    // Construct URLs for each movie based on API response
+    const urls = data.results.map(
+      (movie) => `
+      <url>
+        <loc>https://movie-night-taupe.vercel.app/movie-details/${movie.id}</loc>
+        <lastmod>${new Date().toISOString()}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+      </url>
+    `
+    );
+
+    // Complete sitemap structure
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      ${urls.join("")}
+    </urlset>`;
+
+    // Write sitemap to the public folder
+    fs.writeFileSync(path.join("public", "sitemap.xml"), sitemap);
+    console.log("Sitemap generated successfully.");
   } catch (error) {
-    console.error('Error writing sitemap.xml:', error);
+    console.error("Error generating sitemap:", error);
   }
 };
 
-// Kör funktionen
 generateSitemap();
+
