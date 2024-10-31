@@ -32,6 +32,7 @@ const HomePage = () => {
 
   return (
     <div className="container mx-auto">
+      <h1>Welcome to the best movie library ever</h1>
       <SearchBar onSearch={handleSearch} />
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
