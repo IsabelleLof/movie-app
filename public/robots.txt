@@ -1,5 +1,0 @@
-User-agent: *
-Disallow: /api/
-Allow: /
-
-Sitemap: https://movie-app-ruby-rho.vercel.app/sitemap.xml
