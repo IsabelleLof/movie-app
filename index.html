@@ -1,81 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <!-- Google Tag Manager -->
-    <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-5S61YXC9QT"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-
-      gtag("config", "G-5S61YXC9QT");
-    </script>
-    <!-- End Google Tag Manager -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- SEO Meta Tags -->
     <title>The Movie App</title>
-    <meta
-      name="description"
-      content="Welcome to the best movie app ever! Watch a wide variety of movies online."
-    />
-    <meta
-      name="keywords"
-      content="movies, streaming, free movies, movie library, film, cinema"
-    />
+    <meta name="description" content="Welcome to the best movie library ever!">
+  
+    <!-- Metataggar för Open Graph -->
+    <meta property="og:title" content="The Movie App">
+    <meta property="og:description" content="Watch a wide variety of movies online!">
+    <meta property="og:url" content="https://movie-app-isabellelof-isabellelofs-projects.vercel.app/">
+    <meta property="og:image" content="https://movie-app-isabellelof-isabellelofs-projects.vercel.app/movie_theme.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Movie Theme">
 
-    <!-- Open Graph Meta Tags (for social media sharing) -->
-    <meta property="og:title" content="The Movie App" />
-    <meta
-      property="og:description"
-      content="Watch a wide variety of movies online!"
-    />
-    <meta property="og:url" content="https://movie-app-ruby-rho.vercel.app" />
-    <meta
-      property="og:image"
-      content="https://movie-app-ruby-rho.vercel.app/logo.jpg"
-    />
-    <meta property="og:image:alt" content="Movie app logo image" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <!-- Metataggar för Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Movie App">
+    <meta name="twitter:description" content="Watch any movie for free!">
+    <meta name="twitter:image" content="https://movie-app-isabellelof-isabellelofs-projects.vercel.app/movie_theme.jpg">
 
-    <!-- Twitter Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="The Movie App" />
-    <meta
-      name="twitter:description"
-      content="Watch a wide variety of movies online!"
-    />
-    <meta
-      name="twitter:image"
-      content="https://movie-app-ruby-rho.vercel.app/logo.jpg"
-    />
-
-    <link rel="icon" href="/logo.jpg" type="image/jpeg" />
-
-    <!-- Styles (if any) -->
-    <link rel="stylesheet" href="/path/to/your-styles.css" />
-    <!-- Google Tag Manager -->
-    <!-- End Google Tag Manager -->
+    <link rel="icon" href="/movie_theme.jpg" type="image/jpeg" />
   </head>
   <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript
-      ><iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-5S61YXC9QT"
-        height="0"
-        width="0"
-        style="display: none; visibility: hidden"
-      ></iframe
-    ></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
