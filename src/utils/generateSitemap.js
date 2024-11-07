@@ -7,7 +7,7 @@ import { fileURLToPath } from "url";
 // Load environment variables from .env file
 //dotenv.config();
 
-const BASE_URL = "https://movie-app-isabellelof-isabellelofs-projects.vercel.app/";
+const BASE_URL = "https://movie-lqwi539az-isabellelofs-projects.vercel.app/";
 
 // Check if the API token is loaded correctly
 // const TMDB_API_TOKEN = process.env.VITE_TMDB_API_TOKEN;
