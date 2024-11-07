@@ -1,24 +1,33 @@
-import { writeFileSync } from 'fs';
-import path from 'path';
+import { createWriteStream } from "fs";
+import path from "path";
+import { fileURLToPath } from "url"; 
+
+// Hämta nuvarande filens namn och konvertera till en filväg
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Innehåll för robots.txt
 const robotsTxtContent = `User-agent: *
 Disallow: /api/
 Allow: /
 
-Sitemap: https://movie-app-ruby-rho.vercel.app/sitemap.xml
+Sitemap: https://movie-e0eegp3qk-isabellelofs-projects.vercel.app/sitemap.xml
 `;
 
-// Skriv robots.txt till public-mappen
-const generateRobotsTxt = () => {
-  const robotsPath = path.join(__dirname, '..', 'public', 'robots.txt'); // Public-mappen relativt från din script-fil
-  try {
-    writeFileSync(robotsPath, robotsTxtContent);
-    console.log('robots.txt generated successfully!');
-  } catch (error) {
-    console.error('Error writing robots.txt:', error);
-  }
-};
+// Funktion för att generera robots.txt
+(async () => {
+  const writeStream = createWriteStream(
+    path.join(__dirname, "../..", "public", "robots.txt")
+  );
 
-// Kör funktionen
-generateRobotsTxt();
+  writeStream.write(robotsTxtContent);
+  writeStream.end();
+
+  writeStream.on("finish", () => {
+    console.log("robots.txt generated successfully!");
+  });
+
+  writeStream.on("error", (err) => {
+    console.error("Error writing robots.txt:", err);
+  });
+})();
