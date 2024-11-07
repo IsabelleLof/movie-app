@@ -1,9 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { selectFavorites } from '../redux/favoriteSlice'; // Import the selector from favoriteSlice
 import MovieCard from './MovieCard';
 
+
+// My component for displaying the user's favorite movies
 const FavoritesList = () => {
-  const favorites = useSelector((state) => state.movies.favorites);
+  // Get the list of favorite movies from my favoriteSlice
+  const favorites = useSelector(selectFavorites); // Updated to use selectFavorites from favoriteSlice
 
   return (
     <div className="p-4">
@@ -22,4 +26,5 @@ const FavoritesList = () => {
 };
 
 export default FavoritesList;
+
 

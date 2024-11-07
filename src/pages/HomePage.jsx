@@ -7,6 +7,11 @@ import {
   selectLoading,
   selectError,
 } from "../redux/movieSlice";
+import {
+  addFavorite,
+  removeFavorite,
+  selectFavorites,
+} from "../redux/favoriteSlice"; // Updated imports for favorites
 import SearchBar from "../components/SearchBar";
 import MovieList from "../components/MovieList";
 
@@ -15,31 +20,44 @@ const HomePage = () => {
   const movies = useSelector(selectMovies);
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
+  const favorites = useSelector(selectFavorites); // Access favorites from favoriteSlice
 
-  // Hämta populära filmer när komponenten laddas
+  // Fetch popular movies on component load
   useEffect(() => {
-    dispatch(fetchPopularMovies()); // Hämta populära filmer
+    dispatch(fetchPopularMovies());
   }, [dispatch]);
 
-  // Hantera sökning
+  // Handle search
   const handleSearch = (query) => {
     if (query) {
-      dispatch(fetchMovies(query)); // Sök filmer
+      dispatch(fetchMovies(query)); // Fetch movies based on search query
     } else {
-      dispatch(fetchPopularMovies()); // Visa populära filmer om sökfältet är tomt
+      dispatch(fetchPopularMovies()); // Show popular movies if search is empty
+    }
+  };
+
+  // Function to add or remove a favorite movie
+  const toggleFavorite = (movie) => {
+    if (favorites.some((fav) => fav.id === movie.id)) {
+      dispatch(removeFavorite(movie.id));
+    } else {
+      dispatch(addFavorite(movie));
     }
   };
 
   return (
     <div className="container mx-auto">
-      <h1>Welcome to the best movie library ever</h1>
+      <h1 className="text-3xl font-bold text-center mt-8 mb-4">
+        Welcome to the best movie library ever
+      </h1>
       <SearchBar onSearch={handleSearch} />
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
-      <MovieList movies={movies} />
+      {loading && <p className="text-center">Loading...</p>}
+      {error && <p className="text-red-500 text-center">Error: {error}</p>}
+      <MovieList movies={movies} onToggleFavorite={toggleFavorite} favorites={favorites} />
     </div>
   );
 };
 
 export default HomePage;
+
 
