@@ -28,7 +28,7 @@ A React-based web application where users can search for movies, view movie deta
 - **Tailwind CSS** – Styling
 - **TMDB API** – Movie data
 - **React Router** – Routing
-- **Axios** – HTTP library for API requests
+- **Fetch()** – Using Fetch() for fetching data from api
 - **Cypress** – End-to-end testing
 - **Google Analytics** – User behavior tracking
 
