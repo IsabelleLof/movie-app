@@ -52,7 +52,6 @@ const HomePage = () => {
       </h1>
       <SearchBar onSearch={handleSearch} />
       {loading && <p className="text-center">Loading...</p>}
-      {error && <p className="text-red-500 text-center">Error: {error}</p>}
       <MovieList movies={movies} onToggleFavorite={toggleFavorite} favorites={favorites} />
     </div>
   );

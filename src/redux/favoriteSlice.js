@@ -19,10 +19,10 @@ const favoritesSlice = createSlice({
       // Skicka händelsen till dataLayer för Google Tag Manager (GTM)
       if (window && window.dataLayer) {
         window.dataLayer.push({
-          event: "add_to_favorite", // Anpassat GTM-event för att markera att en favorit lades till
+          event: "add_to_favorites", // Anpassat GTM-event för att markera att en favorit lades till
           favoriteItem: {
-            id: action.payload.id, // Filmens id
-            title: action.payload.title, // Filmens titel 
+            favorite_item_id: action.payload.id, // Filmens id
+            favorite_item_title: action.payload.title, // Filmens titel 
           },
         });
       }
@@ -37,9 +37,10 @@ const favoritesSlice = createSlice({
       state.items = state.items.filter((item) => item.id !== action.payload.id);
 
       // Skicka händelsen till dataLayer för Google Tag Manager (GTM)
+      // Fixa så att man ser remove_from_favorites också
       if (window && window.dataLayer) {
         window.dataLayer.push({
-          event: "remove_from_favorite", // Anpassat GTM-event för att markera att en favorit togs bort
+          event: "remove_from_favorites", // Anpassat GTM-event för att markera att en favorit togs bort
           favoriteItem: {
             id: action.payload.id, // Filmens id
             title: action.payload.title, // Filmens titel 
