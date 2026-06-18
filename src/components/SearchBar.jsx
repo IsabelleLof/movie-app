@@ -58,7 +58,7 @@ const SearchBar = () => {
   return (
     <form onSubmit={handleSearch} className="flex justify-center p-4">
       <input
-        type="text"
+        type=""
         value={query}
         onChange={handleInputChange}
         placeholder="Search for movies..."
